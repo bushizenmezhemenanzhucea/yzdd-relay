@@ -1,0 +1,13 @@
+{
+  "name": "yunduanzhidian-zhongzhuan",
+  "version": "1.0.0",
+  "private": true,
+  "description": "云端之巅 Supabase 中转（Render 版）",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
