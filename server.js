@@ -12,6 +12,11 @@ const http = require('http');
 const https = require('https');
 
 const MUBIAO = 'ttubkzjsxpvjqtqfmyxr.supabase.co';
+
+// v1.1.8：保持一条到 Supabase 的长连接。
+// Render 免费版只有 0.1 个 CPU，每个请求都重新做一次 TLS 握手非常费时间
+// （握手是纯计算，最吃 CPU）。开了 keepAlive，握手只在开头付一次。
+const DAI_LI = new https.Agent({ keepAlive: true, maxSockets: 16, keepAliveMsecs: 30000 });
 const DUAN_KOU = process.env.PORT || 10000;
 
 const fuwu = http.createServer((qiu, ying) => {
@@ -32,6 +37,7 @@ const fuwu = http.createServer((qiu, ying) => {
 		path: qiu.url,
 		method: qiu.method,
 		headers: tou,
+		agent: DAI_LI,
 		timeout: 20000,
 	}, (hui) => {
 		const chu = Object.assign({}, hui.headers);
